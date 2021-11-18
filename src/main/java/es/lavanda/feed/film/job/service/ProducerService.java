@@ -18,7 +18,6 @@ public class ProducerService {
         try {
             log.info("Sending message to queue agent-tmdb-feed-films");
             rabbitTemplate.convertAndSend("agent-tmdb-feed-films", message);
-            rabbitTemplate.stop();
             log.info("Sended message to queue agent-tmdb-feed-films {}", message);
         } catch (Exception e) {
             log.error("Failed send message to queue agent-tmdb-feed-films", e);

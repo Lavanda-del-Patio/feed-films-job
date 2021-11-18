@@ -10,6 +10,7 @@ import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -23,8 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TaskService implements CommandLineRunner {
 
-    @Autowired
     private FilmsService filmsServiceImpl;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     private static AmazonSQS amazonSQS;
 
@@ -54,6 +57,7 @@ public class TaskService implements CommandLineRunner {
             lambda.getFilmModelTorrents().forEach(filmsServiceImpl::executeFilm);
             log.info("Finish task, proceeding to delete message on queue");
             deleteMessage(messageObject);
+            rabbitTemplate.stop();
         }
     }
 
