@@ -1,17 +1,11 @@
 package es.lavanda.feed.film.job.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.server.ResponseStatusException;
 
 import es.lavanda.feed.film.job.exception.FeedFilmsJobException;
 import es.lavanda.feed.film.job.model.FilmModel;
@@ -19,7 +13,6 @@ import es.lavanda.feed.film.job.repository.FilmModelRepository;
 import es.lavanda.lib.common.model.FilmModelTorrent;
 import es.lavanda.lib.common.model.MediaIDTO;
 import es.lavanda.lib.common.model.MediaIDTO.Type;
-import es.lavanda.lib.common.model.MediaODTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
