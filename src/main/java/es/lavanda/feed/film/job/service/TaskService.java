@@ -58,8 +58,8 @@ public class TaskService implements CommandLineRunner {
             lambda.getFilmModelTorrents().forEach(filmsServiceImpl::executeFilm);
             log.info("Finish task, proceeding to delete message on queue");
             deleteMessage(messageObject);
-            rabbitTemplate.stop();
         }
+        rabbitTemplate.stop();
     }
 
     private void deleteMessage(Message messageObject) {
