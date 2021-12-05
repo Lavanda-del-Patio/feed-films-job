@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 
 import es.lavanda.feed.film.job.exception.FeedFilmsJobException;
 import es.lavanda.feed.film.job.model.FilmModel;
+import es.lavanda.feed.film.job.repository.FilmModelHistoryRepository;
 import es.lavanda.feed.film.job.repository.FilmModelRepository;
 import es.lavanda.lib.common.model.FilmModelTorrent;
 import es.lavanda.lib.common.model.MediaIDTO;
@@ -23,12 +24,15 @@ public class FilmsServiceImpl implements FilmsService {
 
     private final FilmModelRepository filmModelRepository;
 
+    private final FilmModelHistoryRepository filmModelHistoryRepository;
+
     private final ProducerService producerService;
 
     @Override
     public void executeFilm(FilmModelTorrent filmModelTorrent) {
         log.info("Execute film {}", filmModelTorrent.toString());
-        if (Boolean.FALSE.equals(filmModelRepository.existsByTorrentsTorrentUrl(filmModelTorrent.getTorrentUrl()))) {
+        if (Boolean.FALSE.equals(filmModelRepository.existsByTorrentsTorrentUrl(filmModelTorrent.getTorrentUrl())) &&
+                Boolean.FALSE.equals(filmModelHistoryRepository.existsByTorrentUrl(filmModelTorrent.getTorrentUrl()))) {
             try {
                 log.info("Torrent {} no exist on database ", filmModelTorrent.getTorrentUrl());
                 createNewFilmModel(List.of(filmModelTorrent));
